@@ -1,18 +1,20 @@
-let mysql=require('mysql2')
-let con= mysql.createConnection({
-    host: "localhost",
-    user : "root",
-    password :"balet2balet"
-    
+const mysql = require('mysql2');
+const config = require('./config');
 
+const db = mysql.createConnection({
+  host: config.db.host,
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.database,
+  multipleStatements: true,
 });
-con.connect(function(err){
-if(err) throw err;
-console.log("Connnected");
-let sql = "CREATE DATABASE BeHealthyDB"
-con.query(sql,function(err, result ){
-    if(err) throw err;
-    console.log(" database created");
+
+db.connect((err) => {
+  if (err) {
+    console.error('MySQL connection error:', err.message);
+    return;
+  }
+  console.log('Connected to MySQL (%s).', config.db.database);
 });
- 
-});
+
+module.exports = db;

@@ -19,8 +19,7 @@ con.connect(function(err) {
         Weight DECIMAL(5,2),
         Height INT,
         Daily_Calorie_Budget INT,
-        Goal_Type VARCHAR(50),
-        Gender VARCHAR(20)
+        Goal_Type VARCHAR(50)
     )`;
     con.query(sqlUsers, function(err) {
         if (err) throw err;
@@ -109,11 +108,7 @@ con.connect(function(err) {
         if (err) throw err;
         console.log("Table 'User_Auth' created");
         
-        // Ensure `Gender` column exists for older DBs
-        con.query("ALTER TABLE Users ADD COLUMN IF NOT EXISTS Gender VARCHAR(20)", function(err) {
-            if (err) console.warn('Could not add Gender column (it may already exist):', err.message);
-            // close connection after final step
-            con.end();
-        });
+        // סוגרים את החיבור רק אחרי שהטבלה האחרונה מסתיימת
+        con.end();
     });
 });
