@@ -1,5 +1,4 @@
-// Simple AI service wrapper
-// Provides `initAI()` and `analyzeMeal(imageBase64)`.
+
 
 const { parseAIResponse } = require('../utils/helpers');
 let client = null;

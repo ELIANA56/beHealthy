@@ -1,12 +1,13 @@
-function listArticles(req, res, { db }) {
-  const sql = `SELECT * FROM Content_Hub ORDER BY Article_ID DESC`;
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Server error fetching articles.' });
-    }
+const articlesModel = require('../models/articlesModel');
+
+async function listArticles(req, res, { db }) {
+  try {
+    const results = await articlesModel.listArticles(db);
     res.json(results);
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error fetching articles.' });
+  }
 }
 
 module.exports = { listArticles };
